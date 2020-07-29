@@ -1,10 +1,10 @@
-package vsj.deveficiente.api.casadocodigo;
+package org.ecorp.casadocodigo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ApiCasaDoCodigoApplicationTests {
+class CasadocodigoApplicationTests {
 
 	@Test
 	void contextLoads() {
