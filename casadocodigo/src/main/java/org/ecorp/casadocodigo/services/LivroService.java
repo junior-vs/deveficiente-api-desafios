@@ -9,45 +9,40 @@ import org.ecorp.casadocodigo.model.Livro;
 import org.ecorp.casadocodigo.repositories.AutorRepository;
 import org.ecorp.casadocodigo.repositories.CategoriaRepository;
 import org.ecorp.casadocodigo.repositories.LivroRespository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+// 7
 @Service
 public class LivroService {
 
-
-  private static final Logger logger = LoggerFactory.getLogger(LivroService.class);
-
-
+  // 1
   @Autowired
   private LivroRespository repository;
 
+  // 1
   @Autowired
   private AutorRepository autorRepository;
 
+  // 1
   @Autowired
   private CategoriaRepository categoriaRepository;
 
   public LivroDTO buscaAutorById(Long id) {
     Optional<Livro> found = repository.findById(id);
+    // 1
     if (found.isEmpty()) {
       throw new ResourceNotFoundException();
     }
+
     return new LivroDTO(found.get());
   }
 
-
+  // 1
   public LivroDTO create(@Valid LivroCreateFormRequest livroRequest) {
 
-    Livro livro = livroRequest.map();
-    livro.setAutor(autorRepository.findById(livroRequest.getAutorID()).orElseThrow());
-    livro.setCategoria(categoriaRepository.findById(livroRequest.getCategoriaID()).orElseThrow());
-    logger.info(livro.toString());
+    Livro livro = livroRequest.toModel(autorRepository, categoriaRepository);
     livro = repository.save(livro);
-
-
     return new LivroDTO(livro);
   }
 

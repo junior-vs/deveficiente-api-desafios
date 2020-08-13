@@ -12,6 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Livro {
@@ -23,36 +28,68 @@ public class Livro {
     @Column(unique = true, nullable = false)
     private Long livroID;
 
+    @NotBlank
     @Column(nullable = false, unique = true)
     private String titulo;
 
+    @NotBlank
     @Column(nullable = false, columnDefinition = "TEXT")
     private String resumo;
 
+    @NotBlank
+    @Size(max = 500)
     @Column(columnDefinition = "TEXT")
     private String sumario;
 
+    @NotNull
     @Column(precision = 10, scale = 2, nullable = false)
     private BigDecimal preco;
 
+    @NotNull
+    @Min(100)
     @Column(nullable = false)
     private Integer nuPagina;
 
+    @NotBlank
     @Column(nullable = false, unique = true)
     private String isbn;
 
+    @Future
     private LocalDate dtPublicacao;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoriaid", nullable = false, foreignKey = @ForeignKey(name = "categoriaid_fk"))
     private Categoria categoria;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "autorid", nullable = false, foreignKey = @ForeignKey(name = "autorid_id"))
     private Autor autor;
 
+    @Deprecated
     public Livro() { //
     }
+
+    
+    
+    public Livro(Long livroID, @NotBlank String titulo, @NotBlank String resumo,
+        @NotBlank @Size(max = 500) String sumario, @NotNull BigDecimal preco,
+        @NotNull @Min(100) Integer nuPagina, @NotBlank String isbn, @Future LocalDate dtPublicacao,
+        @NotNull Categoria categoria, @NotNull Autor autor) {
+      this.livroID = livroID;
+      this.titulo = titulo;
+      this.resumo = resumo;
+      this.sumario = sumario;
+      this.preco = preco;
+      this.nuPagina = nuPagina;
+      this.isbn = isbn;
+      this.dtPublicacao = dtPublicacao;
+      this.categoria = categoria;
+      this.autor = autor;
+    }
+
+
 
     public Long getLivroID() {
         return livroID;

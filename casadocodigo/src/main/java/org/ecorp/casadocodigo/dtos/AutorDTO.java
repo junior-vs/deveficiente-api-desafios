@@ -32,45 +32,6 @@ public class AutorDTO {
   private LocalDateTime tsAlteracao;
 
 
-  public Long getAutorID() {
-    return autorID;
-  }
-
-  public void setAutorID(final Long autorID) {
-    this.autorID = autorID;
-  }
-
-  public String getAutorNome() {
-    return autorNome;
-  }
-
-  public void setAutorNome(final String autorNome) {
-    this.autorNome = autorNome;
-  }
-
-  public String getAutorEmail() {
-    return autorEmail;
-  }
-
-  public void setAutorEmail(final String autorEmail) {
-    this.autorEmail = autorEmail;
-  }
-
-  public String getDescricao() {
-    return descricao;
-  }
-
-  public void setDescricao(final String descricao) {
-    this.descricao = descricao;
-  }
-
-  public LocalDateTime getTsAlteracao() {
-    return tsAlteracao;
-  }
-
-  public void setTsAlteracao(final LocalDateTime tsAlteracao) {
-    this.tsAlteracao = tsAlteracao;
-  }
 
   public AutorDTO(final Autor entity) {
     this.autorID = entity.getAutorID();
@@ -98,6 +59,38 @@ public class AutorDTO {
     this.autorNome = autorNome;
     this.autorEmail = autorEmail;
     this.descricao = descricao;
+  }
+
+  public Long getAutorID() {
+    return autorID;
+  }
+
+  /**
+   * @return the autorNome
+   */
+  public String getAutorNome() {
+    return autorNome;
+  }
+
+  /**
+   * @return the autorEmail
+   */
+  public String getAutorEmail() {
+    return autorEmail;
+  }
+
+  /**
+   * @return the descricao
+   */
+  public String getDescricao() {
+    return descricao;
+  }
+
+  /**
+   * @return the tsAlteracao
+   */
+  public LocalDateTime getTsAlteracao() {
+    return tsAlteracao;
   }
 
 

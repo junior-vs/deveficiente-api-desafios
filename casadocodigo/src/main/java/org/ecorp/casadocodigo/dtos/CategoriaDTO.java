@@ -64,6 +64,8 @@ public class CategoriaDTO {
   public LocalDateTime getInstanteAlteracao() {
     return instanteAlteracao;
   }
+  
+  
 
 
 

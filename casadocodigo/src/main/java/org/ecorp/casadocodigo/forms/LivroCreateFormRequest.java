@@ -10,6 +10,8 @@ import javax.validation.constraints.Size;
 import org.ecorp.casadocodigo.model.Autor;
 import org.ecorp.casadocodigo.model.Categoria;
 import org.ecorp.casadocodigo.model.Livro;
+import org.ecorp.casadocodigo.repositories.AutorRepository;
+import org.ecorp.casadocodigo.repositories.CategoriaRepository;
 import org.ecorp.casadocodigo.validators.ExistsID;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -73,87 +75,15 @@ public class LivroCreateFormRequest {
     this.autorID = autorID;
   }
 
-  /**
-   * @return the titulo
-   */
-  public String getTitulo() {
-    return titulo;
-  }
+
+  public Livro toModel(AutorRepository autorRepository, CategoriaRepository categoriaRepository) {
+
+    Autor autor = autorRepository.findById(this.autorID).orElseThrow();
+    Categoria categoria = categoriaRepository.findById(this.categoriaID).orElseThrow();
+    return new Livro(null, this.titulo, this.resumo, this.sumario, this.preco, this.nuPagina,
+        this.isbn, this.dtPublicacao, categoria, autor);
 
 
-  /**
-   * @return the resumo
-   */
-  public String getResumo() {
-    return resumo;
-  }
-
-
-  /**
-   * @return the sumario
-   */
-  public String getSumario() {
-    return sumario;
-  }
-
-
-  /**
-   * @return the preco
-   */
-  public BigDecimal getPreco() {
-    return preco;
-  }
-
-
-  /**
-   * @return the nuPagina
-   */
-  public Integer getNuPagina() {
-    return nuPagina;
-  }
-
-
-  /**
-   * @return the isbn
-   */
-  public String getIsbn() {
-    return isbn;
-  }
-
-
-  /**
-   * @return the dtPublicacao
-   */
-  public LocalDate getDtPublicacao() {
-    return dtPublicacao;
-  }
-
-
-  /**
-   * @return the categoriaID
-   */
-  public Long getCategoriaID() {
-    return categoriaID;
-  }
-
-
-  /**
-   * @return the autorID
-   */
-  public Long getAutorID() {
-    return autorID;
-  }
-
-  public Livro map() {
-    Livro livro = new Livro();
-    livro.setTitulo(this.titulo);
-    livro.setResumo(this.resumo);
-    livro.setSumario(this.sumario);
-    livro.setPreco(this.preco);
-    livro.setNuPagina(this.nuPagina);
-    livro.setIsbn(this.isbn);
-    livro.setDtPublicacao(this.dtPublicacao);
-    return livro;
   }
 
 

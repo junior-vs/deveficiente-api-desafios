@@ -24,10 +24,4 @@ public class CategoriaCreateFormRequest {
     return new Categoria(null, this.categoriaNome, LocalDateTime.now());
   }
 
-  /**
-   * @return the categoriaNome
-   */
-  public String getCategoriaNome() {
-    return categoriaNome;
-  }
 }
