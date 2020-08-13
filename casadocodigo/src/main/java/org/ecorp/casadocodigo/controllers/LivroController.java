@@ -3,9 +3,9 @@ package org.ecorp.casadocodigo.controllers;
 import java.net.URI;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import org.ecorp.casadocodigo.dtos.AutorDTO;
-import org.ecorp.casadocodigo.forms.AutorCreateFormRequest;
-import org.ecorp.casadocodigo.services.AutorService;
+import org.ecorp.casadocodigo.dtos.LivroDTO;
+import org.ecorp.casadocodigo.forms.LivroCreateFormRequest;
+import org.ecorp.casadocodigo.services.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,27 +17,26 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/autores")
-public class AutorController {
+@RequestMapping("/livros")
+public class LivroController {
 
   @Autowired
-  private AutorService service;
+  private LivroService service;
+
+  @GetMapping("/{id}")
+  public ResponseEntity<LivroDTO> detalheAutor(@PathVariable Long id) {
+    return ResponseEntity.ok(service.buscaAutorById(id));
+  }
 
   @PostMapping
   @Transactional
-  public ResponseEntity<AutorDTO> createAutor(@Valid @RequestBody final AutorCreateFormRequest autor,
-      UriComponentsBuilder builder) {
+  public ResponseEntity<LivroDTO> createAutor(
+      @Valid @RequestBody final LivroCreateFormRequest livroRequest, UriComponentsBuilder builder) {
 
-    AutorDTO created = service.create(autor);
+    LivroDTO created = service.create(livroRequest);
 
-    URI uri = builder.path("/autores/{id}").buildAndExpand(created.getAutorID()).toUri();
+    URI uri = builder.path("/autores/{id}").buildAndExpand(created.getLivroID()).toUri();
     return ResponseEntity.created(uri).body(created);
-  }
-
-
-  @GetMapping("/{id}")
-  public ResponseEntity<AutorDTO> detalheAutor(@PathVariable Long id) {
-    return ResponseEntity.ok(service.buscaAutorById(id));
   }
 
 }

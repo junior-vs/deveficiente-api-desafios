@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,11 +44,11 @@ public class Livro {
     private LocalDate dtPublicacao;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "categoraID", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "categoriaid", nullable = false, foreignKey = @ForeignKey(name = "categoriaid_fk"))
     private Categoria categoria;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "autorID", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "autorid", nullable = false, foreignKey = @ForeignKey(name = "autorid_id"))
     private Autor autor;
 
     public Livro() { //

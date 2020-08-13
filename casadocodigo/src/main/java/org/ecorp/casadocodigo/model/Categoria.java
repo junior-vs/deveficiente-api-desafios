@@ -12,53 +12,72 @@ import javax.persistence.SequenceGenerator;
 public class Categoria {
 
 
-    @Id
-    @SequenceGenerator(name = "CATEGORIA_CATEGORIAID_GENERATOR",
-            sequenceName = "CATEGORIA_CATEGORIAID_SEQ", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "CATEGORIA_CATEGORIAID_GENERATOR")
-    @Column(unique = true, nullable = false)
-    private Long categoraID;
+  @Id
+  @SequenceGenerator(name = "CATEGORIA_CATEGORIAID_GENERATOR",
+      sequenceName = "CATEGORIA_CATEGORIAID_SEQ", allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CATEGORIA_CATEGORIAID_GENERATOR")
+  @Column(unique = true, nullable = false)
+  private Long categoriaID;
 
-    @Column(nullable = false, unique = true)
-    private String nome;
+  @Column(nullable = false, unique = true)
+  private String categoriaNome;
 
-    @Column(nullable = false)
-    private LocalDateTime instanteAlteracao;
+  @Column(nullable = false)
+  private LocalDateTime instanteAlteracao;
 
-    public Categoria() { //
-    }
-
-    public Long getCategoraID() {
-        return categoraID;
-    }
-
-    public void setCategoraID(final Long categoraID) {
-        this.categoraID = categoraID;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(final String nome) {
-        this.nome = nome;
-    }
-
-    public LocalDateTime getInstanteAlteracao() {
-        return instanteAlteracao;
-    }
-
-    public void setInstanteAlteracao(final LocalDateTime instanteAlteracao) {
-        this.instanteAlteracao = instanteAlteracao;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Categoria [categoraID=%s, instanteAlteracao=%s, nome=%s]", categoraID,
-                instanteAlteracao, nome);
-    }
+  public Categoria() { //
+  }
 
 
-    
+  public Categoria(Long categoriaID, String categoriaNome, LocalDateTime instanteAlteracao) {
+    this.categoriaID = categoriaID;
+    this.categoriaNome = categoriaNome;
+    this.instanteAlteracao = instanteAlteracao;
+  }
+
+
+  /**
+   * @return the categoriaID
+   */
+  public Long getCategoriaID() {
+    return categoriaID;
+  }
+
+  /**
+   * @param categoriaID the categoriaID to set
+   */
+  public void setCategoriaID(Long categoriaID) {
+    this.categoriaID = categoriaID;
+  }
+
+  /**
+   * @return the categoriaNome
+   */
+  public String getCategoriaNome() {
+    return categoriaNome;
+  }
+
+  /**
+   * @param categoriaNome the categoriaNome to set
+   */
+  public void setCategoriaNome(String categoriaNome) {
+    this.categoriaNome = categoriaNome;
+  }
+
+  /**
+   * @return the instanteAlteracao
+   */
+  public LocalDateTime getInstanteAlteracao() {
+    return instanteAlteracao;
+  }
+
+  /**
+   * @param instanteAlteracao the instanteAlteracao to set
+   */
+  public void setInstanteAlteracao(LocalDateTime instanteAlteracao) {
+    this.instanteAlteracao = instanteAlteracao;
+  }
+
+
+
 }

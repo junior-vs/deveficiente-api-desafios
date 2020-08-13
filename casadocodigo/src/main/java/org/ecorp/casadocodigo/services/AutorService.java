@@ -2,8 +2,9 @@ package org.ecorp.casadocodigo.services;
 
 import java.util.Optional;
 import javax.validation.Valid;
+import org.ecorp.casadocodigo.dtos.AutorDTO;
 import org.ecorp.casadocodigo.exceptions.ResourceNotFoundException;
-import org.ecorp.casadocodigo.forms.AutorForm;
+import org.ecorp.casadocodigo.forms.AutorCreateFormRequest;
 import org.ecorp.casadocodigo.model.Autor;
 import org.ecorp.casadocodigo.repositories.AutorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,20 +16,20 @@ public class AutorService {
   @Autowired
   private AutorRepository repository;
 
-  public AutorForm create(@Valid AutorForm autorForm) {
+  public AutorDTO create(@Valid AutorCreateFormRequest autorForm) {
 
     Autor saved = repository.save(autorForm.map());
-    return AutorForm.from(saved);
+    return new AutorDTO(saved);
 
   }
 
-  public AutorForm buscaAutorById(Long id) {
+  public AutorDTO buscaAutorById(Long id) {
 
     Optional<Autor> found = repository.findById(id);
     if (found.isEmpty()) {
       throw new ResourceNotFoundException();
     }
-    return AutorForm.from(found.get());
+    return new AutorDTO(found.get());
   }
 
 

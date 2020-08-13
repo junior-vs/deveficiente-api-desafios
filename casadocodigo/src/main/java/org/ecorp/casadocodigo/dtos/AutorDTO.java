@@ -1,4 +1,4 @@
-package org.ecorp.casadocodigo.forms;
+package org.ecorp.casadocodigo.dtos;
 
 import java.time.LocalDateTime;
 import javax.validation.constraints.NotBlank;
@@ -9,7 +9,7 @@ import org.ecorp.casadocodigo.model.Autor;
 import org.ecorp.casadocodigo.validators.UniqueValue;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class AutorForm {
+public class AutorDTO {
 
 
   private Long autorID;
@@ -20,7 +20,7 @@ public class AutorForm {
 
   @NotEmpty
   @NotBlank
-  @UniqueValue(domainClass  = Autor.class, fieldName = "autor_email")
+  @UniqueValue(domainClass = Autor.class, fieldName = "autor_email")
   private String autorEmail;
 
   @NotEmpty
@@ -31,7 +31,6 @@ public class AutorForm {
   @PastOrPresent
   private LocalDateTime tsAlteracao;
 
-  private static AutorForm autorForm;
 
   public Long getAutorID() {
     return autorID;
@@ -73,27 +72,25 @@ public class AutorForm {
     this.tsAlteracao = tsAlteracao;
   }
 
+  public AutorDTO(final Autor entity) {
+    this.autorID = entity.getAutorID();
+    this.autorNome = entity.getAutorNome();
+    this.autorEmail = entity.getAutorEmail();
+    this.descricao = entity.getDescricao();
+    this.tsAlteracao = entity.getTsAlteracao();
+  }
+
   public Autor map() {
-    return new Autor(this);
+    return new Autor(this.autorID, this.autorNome, this.autorEmail, this.descricao,
+        this.tsAlteracao);
   }
 
-
-  public static AutorForm from(final Autor entity) {
-    autorForm = new AutorForm();
-    autorForm.autorID = entity.getAutorID();
-    autorForm.autorNome = entity.getAutorNome();
-    autorForm.autorEmail = entity.getAutorEmail();
-    autorForm.descricao = entity.getDescricao();
-    autorForm.tsAlteracao = entity.getTsAlteracao();
-    return autorForm;
-  }
-
-  public AutorForm() {
+  public AutorDTO() {
     this.tsAlteracao = LocalDateTime.now();
   }
 
   @JsonCreator
-  public AutorForm(Long autorID, @NotEmpty @NotBlank String autorNome,
+  public AutorDTO(Long autorID, @NotEmpty @NotBlank String autorNome,
       @NotEmpty @NotBlank String autorEmail,
       @NotEmpty @NotBlank @Size(max = 400) String descricao) {
     this();
