@@ -1,8 +1,10 @@
 package org.ecorp.casadocodigo.controllers;
 
 import java.net.URI;
+import java.util.List;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import org.ecorp.casadocodigo.dtos.ItemListLivroDTO;
 import org.ecorp.casadocodigo.dtos.LivroDTO;
 import org.ecorp.casadocodigo.forms.LivroCreateFormRequest;
 import org.ecorp.casadocodigo.services.LivroService;
@@ -38,5 +40,11 @@ public class LivroController {
     URI uri = builder.path("/autores/{id}").buildAndExpand(created.getLivroID()).toUri();
     return ResponseEntity.created(uri).body(created);
   }
+
+  @GetMapping(value = "/")
+  public ResponseEntity<List<ItemListLivroDTO>> getMethodName() {
+    return ResponseEntity.ok(service.getList());
+  }
+
 
 }

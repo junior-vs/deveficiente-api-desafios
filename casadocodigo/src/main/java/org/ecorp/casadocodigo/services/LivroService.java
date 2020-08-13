@@ -1,7 +1,12 @@
 package org.ecorp.casadocodigo.services;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
+import org.ecorp.casadocodigo.dtos.ItemListLivroDTO;
 import org.ecorp.casadocodigo.dtos.LivroDTO;
 import org.ecorp.casadocodigo.exceptions.ResourceNotFoundException;
 import org.ecorp.casadocodigo.forms.LivroCreateFormRequest;
@@ -44,6 +49,15 @@ public class LivroService {
     Livro livro = livroRequest.toModel(autorRepository, categoriaRepository);
     livro = repository.save(livro);
     return new LivroDTO(livro);
+  }
+
+  public List<ItemListLivroDTO> getList() {
+
+    return repository.findAll()
+        .stream()
+        .map(livro -> new ItemListLivroDTO(livro))
+        .collect(Collectors.toList());
+    
   }
 
 }
