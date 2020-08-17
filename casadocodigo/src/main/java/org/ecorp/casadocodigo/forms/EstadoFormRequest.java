@@ -43,7 +43,7 @@ public class EstadoFormRequest {
     return paisID;
   }
 
-  public Estado map(EntityManager manager) {
+  public Estado toModel(EntityManager manager) {
     Pais pais = manager.find(Pais.class, this.paisID);
     return new Estado(this.nomeEstado, pais);
   }

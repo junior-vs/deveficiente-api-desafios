@@ -4,7 +4,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import org.ecorp.casadocodigo.model.Pais;
 import org.ecorp.casadocodigo.validators.UniqueValue;
-import com.fasterxml.jackson.annotation.JsonCreator;
 
 public class PaisFormRequest {
 
@@ -13,7 +12,7 @@ public class PaisFormRequest {
   @UniqueValue(domainClass = Pais.class, fieldName = "nomePais")
   private String nomePais;
 
-  public Pais map() {
+  public Pais toModel() {
     return new Pais(nomePais);
   }
 
@@ -23,7 +22,7 @@ public class PaisFormRequest {
   }
 
   public PaisFormRequest() {
-    // TODO Auto-generated constructor stub
+    // Auto-generated constructor stub
   }
 
   public PaisFormRequest(@NotNull @NotBlank @UniqueValue(domainClass = Pais.class,

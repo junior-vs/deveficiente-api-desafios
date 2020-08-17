@@ -14,7 +14,7 @@ import org.ecorp.casadocodigo.model.Pais;
 import org.ecorp.casadocodigo.repositories.EstadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+//5
 @Service
 public class EstadoService {
 
@@ -37,14 +37,14 @@ public class EstadoService {
 
   public EstadoDTO criar(@Valid EstadoFormRequest request) {
 
-    Estado estado = request.map(entityManager);
+    Estado estado = request.toModel(entityManager);
     estado = repository.save(estado);
 
 
     return new EstadoDTO(estado);
   }
 
-  public List<EstadoDTO >buscaPorPaisID(Long paisID) {
+  public List<EstadoDTO> buscaPorPaisID(Long paisID) {
     Pais pais = entityManager.find(Pais.class, paisID);
     List<Estado> findByPais = repository.findByPais(pais);
     return findByPais.stream().map(e -> new EstadoDTO(e)).collect(Collectors.toList());
