@@ -17,7 +17,7 @@ public class PaisService {
   private PaisRepository repository;
 
   public PaisDTO criar(@Valid PaisFormRequest paisRequest) {
-    Pais pais = repository.save(paisRequest.map());
+    Pais pais = repository.save(paisRequest.toModel());
     return new PaisDTO(pais);
   }
 
