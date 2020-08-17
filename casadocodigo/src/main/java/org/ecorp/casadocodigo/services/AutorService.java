@@ -4,7 +4,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 import org.ecorp.casadocodigo.dtos.AutorDTO;
 import org.ecorp.casadocodigo.exceptions.ResourceNotFoundException;
-import org.ecorp.casadocodigo.forms.AutorCreateFormRequest;
+import org.ecorp.casadocodigo.forms.AutorFormRequest;
 import org.ecorp.casadocodigo.model.Autor;
 import org.ecorp.casadocodigo.repositories.AutorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ public class AutorService {
   @Autowired
   private AutorRepository repository;
 
-  public AutorDTO create(@Valid AutorCreateFormRequest autorForm) {
+  public AutorDTO create(@Valid AutorFormRequest autorForm) {
 
     Autor saved = repository.save(autorForm.map());
     return new AutorDTO(saved);

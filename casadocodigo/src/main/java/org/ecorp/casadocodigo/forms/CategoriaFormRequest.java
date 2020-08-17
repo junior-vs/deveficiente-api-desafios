@@ -7,7 +7,7 @@ import org.ecorp.casadocodigo.model.Categoria;
 import org.ecorp.casadocodigo.validators.UniqueValue;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class CategoriaCreateFormRequest {
+public class CategoriaFormRequest {
 
   @NotNull
   @NotBlank
@@ -15,7 +15,7 @@ public class CategoriaCreateFormRequest {
   private String categoriaNome;
 
   @JsonCreator
-  public CategoriaCreateFormRequest(@NotNull @NotBlank @UniqueValue(domainClass = Categoria.class,
+  public CategoriaFormRequest(@NotNull @NotBlank @UniqueValue(domainClass = Categoria.class,
       fieldName = "nome") String categoriaNome) {
     this.categoriaNome = categoriaNome;
   }

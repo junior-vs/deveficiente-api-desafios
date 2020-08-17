@@ -6,7 +6,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import org.ecorp.casadocodigo.dtos.ItemListLivroDTO;
 import org.ecorp.casadocodigo.dtos.LivroDTO;
-import org.ecorp.casadocodigo.forms.LivroCreateFormRequest;
+import org.ecorp.casadocodigo.forms.LivroFormRequest;
 import org.ecorp.casadocodigo.services.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +33,7 @@ public class LivroController {
   @PostMapping
   @Transactional
   public ResponseEntity<LivroDTO> createAutor(
-      @Valid @RequestBody final LivroCreateFormRequest livroRequest, UriComponentsBuilder builder) {
+      @Valid @RequestBody final LivroFormRequest livroRequest, UriComponentsBuilder builder) {
 
     LivroDTO created = service.create(livroRequest);
 

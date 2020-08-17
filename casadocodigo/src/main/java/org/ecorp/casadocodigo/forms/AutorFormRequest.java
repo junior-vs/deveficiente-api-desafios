@@ -8,7 +8,7 @@ import org.ecorp.casadocodigo.model.Autor;
 import org.ecorp.casadocodigo.validators.UniqueValue;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class AutorCreateFormRequest {
+public class AutorFormRequest {
 
   @NotEmpty
   @NotBlank
@@ -31,7 +31,7 @@ public class AutorCreateFormRequest {
 
 
   @JsonCreator
-  public AutorCreateFormRequest(@NotEmpty @NotBlank String autorNome,
+  public AutorFormRequest(@NotEmpty @NotBlank String autorNome,
       @NotEmpty @NotBlank String autorEmail,
       @NotEmpty @NotBlank @Size(max = 400) String descricao) {
     this.autorNome = autorNome;

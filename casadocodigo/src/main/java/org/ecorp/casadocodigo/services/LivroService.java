@@ -9,7 +9,7 @@ import javax.validation.Valid;
 import org.ecorp.casadocodigo.dtos.ItemListLivroDTO;
 import org.ecorp.casadocodigo.dtos.LivroDTO;
 import org.ecorp.casadocodigo.exceptions.ResourceNotFoundException;
-import org.ecorp.casadocodigo.forms.LivroCreateFormRequest;
+import org.ecorp.casadocodigo.forms.LivroFormRequest;
 import org.ecorp.casadocodigo.model.Livro;
 import org.ecorp.casadocodigo.repositories.AutorRepository;
 import org.ecorp.casadocodigo.repositories.CategoriaRepository;
@@ -44,7 +44,7 @@ public class LivroService {
   }
 
   // 1
-  public LivroDTO create(@Valid LivroCreateFormRequest livroRequest) {
+  public LivroDTO create(@Valid LivroFormRequest livroRequest) {
 
     Livro livro = livroRequest.toModel(autorRepository, categoriaRepository);
     livro = repository.save(livro);

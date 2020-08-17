@@ -4,7 +4,7 @@ import java.net.URI;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import org.ecorp.casadocodigo.dtos.CategoriaDTO;
-import org.ecorp.casadocodigo.forms.CategoriaCreateFormRequest;
+import org.ecorp.casadocodigo.forms.CategoriaFormRequest;
 import org.ecorp.casadocodigo.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,7 @@ public class CategoriaControllers {
 
   @PostMapping
   @Transactional
-  public ResponseEntity<CategoriaDTO> createAutor(@Valid @RequestBody final CategoriaCreateFormRequest autor,
+  public ResponseEntity<CategoriaDTO> createAutor(@Valid @RequestBody final CategoriaFormRequest autor,
       UriComponentsBuilder uriBuilder) {
     CategoriaDTO created = service.create(autor);
 

@@ -11,8 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
-import org.ecorp.casadocodigo.forms.AutorCreateFormRequest;
-import org.ecorp.casadocodigo.forms.CategoriaCreateFormRequest;
+import org.ecorp.casadocodigo.forms.AutorFormRequest;
+import org.ecorp.casadocodigo.forms.CategoriaFormRequest;
 import org.ecorp.casadocodigo.model.Livro;
 
 public class LivroDTO {

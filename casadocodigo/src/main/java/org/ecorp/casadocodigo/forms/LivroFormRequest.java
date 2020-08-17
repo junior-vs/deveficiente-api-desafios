@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
-public class LivroCreateFormRequest {
+public class LivroFormRequest {
 
   @NotBlank
   @NotNull
@@ -54,12 +54,12 @@ public class LivroCreateFormRequest {
   @ExistsID(domainClass = Autor.class, fieldName = "autorID")
   private Long autorID;
 
-  public LivroCreateFormRequest() {
+  public LivroFormRequest() {
     // Auto-generated constructor stub
   }
 
   @JsonCreator
-  public LivroCreateFormRequest(@NotBlank @NotNull String titulo,
+  public LivroFormRequest(@NotBlank @NotNull String titulo,
       @NotBlank @NotNull @Size(max = 500) String resumo, String sumario,
       @NotNull @Min(20) BigDecimal preco, @NotNull @Min(20) Integer nuPagina,
       @NotBlank @NotNull String isbn, @Future LocalDate dtPublicacao, @NotNull Long categoriaID,

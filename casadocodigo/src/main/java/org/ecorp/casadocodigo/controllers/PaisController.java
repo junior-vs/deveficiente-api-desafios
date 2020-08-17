@@ -3,9 +3,9 @@ package org.ecorp.casadocodigo.controllers;
 import java.net.URI;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import org.ecorp.casadocodigo.dtos.AutorDTO;
-import org.ecorp.casadocodigo.forms.AutorFormRequest;
-import org.ecorp.casadocodigo.services.AutorService;
+import org.ecorp.casadocodigo.dtos.PaisDTO;
+import org.ecorp.casadocodigo.forms.PaisFormRequest;
+import org.ecorp.casadocodigo.services.PaisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,27 +17,27 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/autores")
-public class AutorController {
+@RequestMapping("/paises")
+public class PaisController {
 
   @Autowired
-  private AutorService service;
+  private PaisService service;
 
   @PostMapping
   @Transactional
-  public ResponseEntity<AutorDTO> createAutor(@Valid @RequestBody final AutorFormRequest autor,
+  public ResponseEntity<PaisDTO> criarPais(@Valid @RequestBody final PaisFormRequest paisRequest,
       UriComponentsBuilder builder) {
-
-    AutorDTO created = service.create(autor);
-
-    URI uri = builder.path("/autores/{id}").buildAndExpand(created.getAutorID()).toUri();
-    return ResponseEntity.created(uri).body(created);
+    PaisDTO dto = service.criar(paisRequest);
+    URI location = builder.path("/paises/{id}").buildAndExpand(dto.getPaisID()).toUri();
+    return ResponseEntity.created(location).body(dto);
   }
 
 
-  @GetMapping("/{id}")
-  public ResponseEntity<AutorDTO> detalheAutor(@PathVariable Long id) {
-    return ResponseEntity.ok(service.buscaAutorById(id));
+  @GetMapping("{id}")
+  public ResponseEntity<PaisDTO> detalhePais(@PathVariable final Long id) {
+    return ResponseEntity.ok(service.buscaPorId(id));
+
   }
+
 
 }
