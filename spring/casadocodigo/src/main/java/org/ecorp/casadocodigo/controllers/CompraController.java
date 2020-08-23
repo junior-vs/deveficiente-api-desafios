@@ -1,6 +1,7 @@
 package org.ecorp.casadocodigo.controllers;
 
 import java.net.URI;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import org.ecorp.casadocodigo.dtos.CompraDTO;
 import org.ecorp.casadocodigo.forms.CompraFormRequest;
@@ -11,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,6 +44,7 @@ public class CompraController {
 
 
   @PostMapping()
+  @Transactional
   public ResponseEntity<CompraDTO> postMethodName(@RequestBody @Valid CompraFormRequest compraForm,
       UriComponentsBuilder builder) {
     log.info(compraForm.toString());

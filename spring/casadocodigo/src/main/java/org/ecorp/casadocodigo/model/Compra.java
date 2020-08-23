@@ -1,19 +1,23 @@
 package org.ecorp.casadocodigo.model;
 
+import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.GenerationType.SEQUENCE;
-import java.math.BigDecimal;
 import java.util.Objects;
+import java.util.function.Function;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import org.ecorp.casadocodigo.validators.ExistsID;
-import org.hibernate.validator.internal.constraintvalidators.hv.br.CNPJValidator;
-import org.hibernate.validator.internal.constraintvalidators.hv.br.CPFValidator;
 import org.springframework.util.Assert;
 
 @Entity
@@ -25,7 +29,6 @@ public class Compra {
   @GeneratedValue(strategy = SEQUENCE, generator = "COMPRA_COMPRARID_GENERATOR")
   @Column(unique = true, nullable = false)
   private Long compraID;
-
 
   @NotBlank
   @Email
@@ -50,11 +53,13 @@ public class Compra {
   public String cidade;
 
   @NotNull
-  @ExistsID(domainClass = Pais.class, fieldName = "paisID")
-  public Long paisID;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "paisid", nullable = false, foreignKey = @ForeignKey(name = "paisid_fk"))
+  public Pais pais;
 
-  @ExistsID(domainClass = Estado.class, fieldName = "estadoID")
-  public Long estadoID;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "estadoid", foreignKey = @ForeignKey(name = "estadoid_fk"))
+  public Estado estado;
 
   @NotNull
   private String telefone;
@@ -62,28 +67,14 @@ public class Compra {
   @NotBlank
   private String cep;
 
-  @NotNull
-  private BigDecimal total;
+  @OneToOne(mappedBy = "compra", cascade = PERSIST)
+  private Pedido pedido;
 
-  /**
-   * Criado para satisfazer o JPA
-   */
-  @Deprecated(since = "0.0.0")
-  public Compra() {}
+  public Compra(@NotBlank @Email String emailComprador, @NotBlank String nomeComprador,
+      @NotBlank String sobrenomeComprador, @NotBlank String documento, @NotBlank String rua,
+      @NotBlank String complemento, @NotBlank String cidade, Pais pais, @NotNull String telefone,
+      @NotBlank String cep, Function<Compra, Pedido> funcaoConstrutorPedido) {
 
-  public Compra(@NotBlank @Email String emailComprador, 
-      @NotBlank String nomeComprador,
-      @NotBlank String sobrenomeComprador, 
-      @NotBlank String documento, 
-      @NotBlank String rua,
-      @NotBlank String complemento, 
-      @NotBlank String cidade,
-      @NotNull @ExistsID(domainClass = Pais.class, fieldName = "paisID") Long paisID,
-      @ExistsID(domainClass = Estado.class, fieldName = "estadoID") Long estadoID,
-      @NotNull String telefone,
-      @NotBlank String cep, 
-      @NotNull BigDecimal total) {
-    
     this.emailComprador = Objects.requireNonNull(emailComprador);
     this.nomeComprador = Objects.requireNonNull(nomeComprador);
     this.sobrenomeComprador = Objects.requireNonNull(sobrenomeComprador);
@@ -91,90 +82,145 @@ public class Compra {
     this.rua = Objects.requireNonNull(rua);
     this.complemento = Objects.requireNonNull(complemento);
     this.cidade = Objects.requireNonNull(cidade);
-    this.paisID = Objects.requireNonNull(paisID);
-    this.estadoID = estadoID;
+    this.pais = Objects.requireNonNull(pais);
     this.telefone = Objects.requireNonNull(telefone);
     this.cep = Objects.requireNonNull(cep);
-    this.total = Objects.requireNonNull(total);
+    this.pedido = funcaoConstrutorPedido.apply(this);
   }
 
-
-  public boolean documentoValido() {
-    Assert.hasLength(documento,
-        "voce não deveria validar o documento se ele não tiver sido preenchido");
-
-    CPFValidator cpfValidator = new CPFValidator();
-    cpfValidator.initialize(null);
-
-    CNPJValidator cnpjValidator = new CNPJValidator();
-    cnpjValidator.initialize(null);
-
-    return cpfValidator.isValid(documento, null) || cnpjValidator.isValid(documento, null);
-
-  }
-
-
-  public String getEmailComprador() {
-    return emailComprador;
-  }
-
-
-  public String getNomeComprador() {
-    return nomeComprador;
-  }
-
-
-  public String getSobrenomeComprador() {
-    return sobrenomeComprador;
-  }
-
-
-  public String getDocumento() {
-    return documento;
-  }
-
-
-  public String getRua() {
-    return rua;
-  }
-
-
-  public String getComplemento() {
-    return complemento;
-  }
-
-
-  public String getCidade() {
-    return cidade;
-  }
-
-
-  public Long getPaisID() {
-    return paisID;
-  }
-
-
-  public Long getEstadoID() {
-    return estadoID;
-  }
-
-
-  public String getTelefone() {
-    return telefone;
-  }
-
-
-  public String getCep() {
-    return cep;
-  }
 
 
   @Override
   public String toString() {
     return String.format(
-        "CompraFormRequest [emailComprador=%s, nomeComprador=%s, sobrenomeComprador=%s, documento=%s, rua=%s, complemento=%s, cidade=%s, paisID=%s, estadoID=%s, telefone=%s, cep=%s, total=%s",
-        emailComprador, nomeComprador, sobrenomeComprador, documento, rua, complemento, cidade,
-        paisID, estadoID, telefone, cep, total);
+        "Compra [compraID=%s, emailComprador=%s, nomeComprador=%s, sobrenomeComprador=%s, documento=%s, rua=%s, complemento=%s, cidade=%s, pais=%s, estado=%s, telefone=%s, cep=%s, pedido=%s]",
+        compraID, emailComprador, nomeComprador, sobrenomeComprador, documento, rua, complemento,
+        cidade, pais, estado, telefone, cep, pedido);
+  }
+
+
+
+  public void setEstado(@NotNull @Valid Estado estado) {
+    Assert.notNull(pais, "Deve ter um pais assoaciado");
+    Assert.isTrue(estado.pertence(pais), "Este Estado não é do pais Associado");
+    this.estado = estado;
+  }
+
+
+
+  /**
+   * @return the compraID
+   */
+  public Long getCompraID() {
+    return compraID;
+  }
+
+
+
+  /**
+   * @return the emailComprador
+   */
+  public String getEmailComprador() {
+    return emailComprador;
+  }
+
+
+
+  /**
+   * @return the nomeComprador
+   */
+  public String getNomeComprador() {
+    return nomeComprador;
+  }
+
+
+
+  /**
+   * @return the sobrenomeComprador
+   */
+  public String getSobrenomeComprador() {
+    return sobrenomeComprador;
+  }
+
+
+
+  /**
+   * @return the documento
+   */
+  public String getDocumento() {
+    return documento;
+  }
+
+
+
+  /**
+   * @return the rua
+   */
+  public String getRua() {
+    return rua;
+  }
+
+
+
+  /**
+   * @return the complemento
+   */
+  public String getComplemento() {
+    return complemento;
+  }
+
+
+
+  /**
+   * @return the cidade
+   */
+  public String getCidade() {
+    return cidade;
+  }
+
+
+
+  /**
+   * @return the pais
+   */
+  public Pais getPais() {
+    return pais;
+  }
+
+
+
+  /**
+   * @return the estado
+   */
+  public Estado getEstado() {
+    return estado;
+  }
+
+
+
+  /**
+   * @return the telefone
+   */
+  public String getTelefone() {
+    return telefone;
+  }
+
+
+
+  /**
+   * @return the cep
+   */
+  public String getCep() {
+    return cep;
+  }
+
+
+
+  /**
+   * @return the pedido
+   */
+  public Pedido getPedido() {
+    return pedido;
   }
 
 

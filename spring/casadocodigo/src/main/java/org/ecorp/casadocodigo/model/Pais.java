@@ -80,6 +80,12 @@ public class Pais {
     return Objects.equals(nomePais, other.nomePais);
   }
 
+  @Override
+  public String toString() {
+    return String.format("Pais [paisID=%s, nomePais=%s]", paisID, nomePais);
+  }
+
+  
 
 
 }

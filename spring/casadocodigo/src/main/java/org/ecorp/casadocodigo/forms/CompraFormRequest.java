@@ -1,19 +1,32 @@
 package org.ecorp.casadocodigo.forms;
 
 import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Function;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import org.ecorp.casadocodigo.model.Compra;
 import org.ecorp.casadocodigo.model.Estado;
 import org.ecorp.casadocodigo.model.Pais;
+import org.ecorp.casadocodigo.model.Pedido;
+import org.ecorp.casadocodigo.repositories.EstadoRepository;
+import org.ecorp.casadocodigo.repositories.LivroRespository;
+import org.ecorp.casadocodigo.repositories.PaisRepository;
 import org.ecorp.casadocodigo.validators.ExistsID;
 import org.hibernate.validator.internal.constraintvalidators.hv.br.CNPJValidator;
 import org.hibernate.validator.internal.constraintvalidators.hv.br.CPFValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 public class CompraFormRequest {
+
+
+  private static final Logger log = LoggerFactory.getLogger(CompraFormRequest.class);
+
 
   @NotBlank
   @Email
@@ -92,6 +105,7 @@ public class CompraFormRequest {
   }
 
 
+
   public String getEmailComprador() {
     return emailComprador;
   }
@@ -157,6 +171,26 @@ public class CompraFormRequest {
         "CompraFormRequest [emailComprador=%s, nomeComprador=%s, sobrenomeComprador=%s, documento=%s, rua=%s, complemento=%s, cidade=%s, paisID=%s, estadoID=%s, telefone=%s, cep=%s, pedido=%s]",
         emailComprador, nomeComprador, sobrenomeComprador, documento, rua, complemento, cidade,
         paisID, estadoID, telefone, cep, pedido);
+  }
+
+
+  public Compra toModel(PaisRepository reposotyPais, EstadoRepository reposotyEstado,
+      LivroRespository livroRespository) {
+
+    Optional<Pais> pais = reposotyPais.findById(paisID);
+
+    Function<Compra, Pedido> funcaoConstrutorPedido = pedido.toModel(livroRespository);
+
+
+    Compra compra = new Compra(emailComprador, nomeComprador, sobrenomeComprador, documento, rua,
+        complemento, cidade, pais.get(), telefone, cep, funcaoConstrutorPedido);
+    if (estadoID != null) {
+      Optional<Estado> estado = reposotyEstado.findById(estadoID);
+      compra.setEstado(estado.get());
+    }
+
+
+    return compra;
   }
 
 

@@ -21,19 +21,16 @@ public class EstadoPertenceAPaisValidation implements org.springframework.valida
 
   @Override
   public void validate(Object target, Errors errors) {
-    if (errors.hasErrors())
+    CompraFormRequest compra = (CompraFormRequest) target;
+    if (errors.hasErrors() || compra.getEstadoID() == null)
       return;
 
-    CompraFormRequest compra = (CompraFormRequest) target;
 
     Pais foundPais = manager.find(Pais.class, compra.getPaisID());
     Estado foundEstado = manager.find(Estado.class, compra.getEstadoID());
 
-    if(!foundEstado.pertence(foundPais))
+    if (!foundEstado.pertence(foundPais))
       errors.rejectValue("EstadoID", null, "Este estado não é o do pais selecionado");
-
-
-
   }
 
 
