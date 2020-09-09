@@ -7,8 +7,6 @@ import javax.validation.Valid;
 import org.ecorp.casadocodigo.dtos.EstadoDTO;
 import org.ecorp.casadocodigo.forms.EstadoFormRequest;
 import org.ecorp.casadocodigo.services.EstadoService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +23,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequestMapping("/estados")
 public class EstadoController {
 
-  private static final Logger log = LoggerFactory.getLogger(EstadoController.class);
 
   @Autowired
   private EstadoService service;

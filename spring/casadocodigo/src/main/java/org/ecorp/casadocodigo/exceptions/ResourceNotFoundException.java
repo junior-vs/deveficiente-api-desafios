@@ -1,5 +1,6 @@
 package org.ecorp.casadocodigo.exceptions;
 
+@SuppressWarnings("serial")
 public class ResourceNotFoundException extends RuntimeException {
 
   public ResourceNotFoundException() {

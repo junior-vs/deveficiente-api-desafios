@@ -17,15 +17,10 @@ import org.ecorp.casadocodigo.repositories.PaisRepository;
 import org.ecorp.casadocodigo.validators.ExistsID;
 import org.hibernate.validator.internal.constraintvalidators.hv.br.CNPJValidator;
 import org.hibernate.validator.internal.constraintvalidators.hv.br.CPFValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 public class CompraFormRequest {
-
-
-  private static final Logger log = LoggerFactory.getLogger(CompraFormRequest.class);
 
 
   @NotBlank

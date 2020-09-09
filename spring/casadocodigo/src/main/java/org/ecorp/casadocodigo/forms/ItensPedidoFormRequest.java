@@ -2,7 +2,6 @@ package org.ecorp.casadocodigo.forms;
 
 import java.util.Objects;
 import java.util.Optional;
-import javax.persistence.EntityManager;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
