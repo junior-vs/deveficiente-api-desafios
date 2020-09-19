@@ -26,8 +26,8 @@ public class Compra {
   @Id
   @SequenceGenerator(name = "COMPRA_COMPRAID_GENERATOR", sequenceName = "COMPRA_COMPRAID_SEQ",
       allocationSize = 1)
-  @GeneratedValue(strategy = SEQUENCE, generator = "COMPRA_COMPRARID_GENERATOR")
-  @Column(unique = true, nullable = false)
+  @GeneratedValue(strategy = SEQUENCE, generator = "COMPRA_COMPRAID_GENERATOR")
+  @Column(unique = true, nullable = false)          
   private Long compraID;
 
   @NotBlank

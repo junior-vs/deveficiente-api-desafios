@@ -18,7 +18,7 @@ public @interface UniqueValue {
 
   String message()
 
-  default "{Erro de validacao}";
+  default "Valor ja existe na base";
 
   Class<?>[] groups() default {};
 

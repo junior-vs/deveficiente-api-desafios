@@ -18,6 +18,7 @@ public class NovoCupomRequest {
   @NotBlank
   @UniqueValue(domainClass = Cupom.class, fieldName = "codigo")
   private String codigo;
+
   @Positive
   @NotNull
   private BigDecimal percentualDesconto;

@@ -14,7 +14,6 @@ public class Cupom {
   @Column(nullable = false, unique = true)
   private String codigo;
 
-  @Size(max = 100, min = 0)
   @Column(nullable = false)
   private BigDecimal percentualDesconto;
 
