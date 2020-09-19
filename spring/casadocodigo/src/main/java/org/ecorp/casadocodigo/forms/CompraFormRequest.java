@@ -182,6 +182,15 @@ public class CompraFormRequest {
         paisID, estadoID, telefone, cep, pedido);
   }
 
+  /**
+   * Realiza o mapeamento de CompraFormRequest para uma entidade Compra
+   * 
+   * @param reposotyPais
+   * @param reposotyEstado
+   * @param livroRespository
+   * @param cupomRepository
+   * @return
+   */
 
   public Compra toModel(PaisRepository reposotyPais, EstadoRepository reposotyEstado,
       LivroRespository livroRespository, CupomRepository cupomRepository) {

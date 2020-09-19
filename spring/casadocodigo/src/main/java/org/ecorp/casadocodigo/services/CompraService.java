@@ -25,13 +25,13 @@ public class CompraService {
   @Autowired
   private CupomRepository cupomRepository;
   @Autowired
-  private CompraRepository repository;
+  private CompraRepository compraRepository;
 
   @Transactional
   public CompraDTO realizaCompra(@Valid CompraFormRequest compraForm) {
 
     Compra compra = compraForm.toModel(reposotyPais, reposotyEstado, livroRespository, cupomRepository);
-    repository.save(compra);
+    compraRepository.save(compra);
     return new CompraDTO(compra);
   }
 
