@@ -44,6 +44,8 @@ public class CompraDTO {
   @NotBlank
   private String cep;
 
+  private CupomAplicadoDTO cupom;
+
   @OneToOne(mappedBy = "compra", cascade = PERSIST)
   private PedidoDTO pedido;
 
@@ -63,6 +65,7 @@ public class CompraDTO {
     this.telefone = compra.getTelefone();
     this.cep = compra.getCep();
     this.pedido = new PedidoDTO(compra.getPedido());
+    this.cupom = new CupomAplicadoDTO(compra.getCupomAplicado());
   }
 
 
@@ -169,6 +172,9 @@ public class CompraDTO {
     return pedido;
   }
 
+  public CupomAplicadoDTO getCupom() {
+    return cupom;
+  }
 
   @Override
   public String toString() {

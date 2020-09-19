@@ -8,12 +8,15 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import org.ecorp.casadocodigo.model.Compra;
+import org.ecorp.casadocodigo.model.Cupom;
 import org.ecorp.casadocodigo.model.Estado;
 import org.ecorp.casadocodigo.model.Pais;
 import org.ecorp.casadocodigo.model.Pedido;
+import org.ecorp.casadocodigo.repositories.CupomRepository;
 import org.ecorp.casadocodigo.repositories.EstadoRepository;
 import org.ecorp.casadocodigo.repositories.LivroRespository;
 import org.ecorp.casadocodigo.repositories.PaisRepository;
+import org.ecorp.casadocodigo.validators.CupomValido;
 import org.ecorp.casadocodigo.validators.ExistsID;
 import org.hibernate.validator.internal.constraintvalidators.hv.br.CNPJValidator;
 import org.hibernate.validator.internal.constraintvalidators.hv.br.CPFValidator;
@@ -58,9 +61,14 @@ public class CompraFormRequest {
   @NotBlank
   private String cep;
 
+  @ExistsID(domainClass = Cupom.class, fieldName = "codigo")
+  @CupomValido
+  private String cupom;
+
   @NotNull
   @Valid
   private PedidoRequestForm pedido;
+
 
   @JsonCreator
   public CompraFormRequest(@NotBlank @Email String emailComprador, @NotBlank String nomeComprador,
@@ -68,7 +76,8 @@ public class CompraFormRequest {
       @NotBlank String complemento, @NotBlank String cidade,
       @NotNull @ExistsID(domainClass = Pais.class, fieldName = "paisID") Long paisID,
       @ExistsID(domainClass = Estado.class, fieldName = "estadoID") Long estadoID,
-      @NotNull String telefone, @NotBlank String cep, @Valid @NotNull PedidoRequestForm pedido) {
+      @NotNull String telefone, @NotBlank String cep, @Valid @NotNull PedidoRequestForm pedido,
+      String cupom) {
 
     this.emailComprador = Objects.requireNonNull(emailComprador);
     this.nomeComprador = Objects.requireNonNull(nomeComprador);
@@ -82,6 +91,7 @@ public class CompraFormRequest {
     this.telefone = Objects.requireNonNull(telefone);
     this.cep = Objects.requireNonNull(cep);
     this.pedido = Objects.requireNonNull(pedido);
+    this.cupom = cupom;
   }
 
 
@@ -145,6 +155,10 @@ public class CompraFormRequest {
     return estadoID;
   }
 
+  public String getCupom() {
+    return cupom;
+  }
+
 
   public String getTelefone() {
     return telefone;
@@ -170,15 +184,16 @@ public class CompraFormRequest {
 
 
   public Compra toModel(PaisRepository reposotyPais, EstadoRepository reposotyEstado,
-      LivroRespository livroRespository) {
+      LivroRespository livroRespository, CupomRepository cupomRepository) {
 
     Optional<Pais> pais = reposotyPais.findById(paisID);
+    Cupom cupom = cupomRepository.findByCodigo(this.cupom);
 
     Function<Compra, Pedido> funcaoConstrutorPedido = pedido.toModel(livroRespository);
 
 
     Compra compra = new Compra(emailComprador, nomeComprador, sobrenomeComprador, documento, rua,
-        complemento, cidade, pais.get(), telefone, cep, funcaoConstrutorPedido);
+        complemento, cidade, pais.get(), telefone, cep, funcaoConstrutorPedido, cupom);
     if (estadoID != null) {
       Optional<Estado> estado = reposotyEstado.findById(estadoID);
       compra.setEstado(estado.get());
@@ -187,7 +202,6 @@ public class CompraFormRequest {
 
     return compra;
   }
-
 
 
 }

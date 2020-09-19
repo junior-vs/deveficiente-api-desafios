@@ -9,7 +9,7 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.util.Assert;
 
 
-public class ExistsIDValidator implements ConstraintValidator<ExistsID, Long> {
+public class ExistsIDValidator implements ConstraintValidator<ExistsID, Object> {
 
   private String fieldName;
   private Class<?> domainClass;
@@ -18,7 +18,7 @@ public class ExistsIDValidator implements ConstraintValidator<ExistsID, Long> {
   private EntityManager manager;
 
   @Override
-  public boolean isValid(Long value, ConstraintValidatorContext context) {
+  public boolean isValid(Object value, ConstraintValidatorContext context) {
 
     if (value == null) {
       return true;

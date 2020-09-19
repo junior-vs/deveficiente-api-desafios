@@ -23,19 +23,21 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 @RequestMapping("/compra")
 public class CompraController {
-  
-  
+
+
   private static final Logger log = LoggerFactory.getLogger(CompraController.class);
 
 
   @Autowired
   private CompraService service;
-  
+
   @Autowired
   private EstadoPertenceAPaisValidation estadoPertenceAPaisValidation;
-  
+
   @Autowired
   private DocumentoCpfCnpjValidation documentoCpfCnpjValidation;
+
+
 
   @InitBinder
   public void init(WebDataBinder binder) {

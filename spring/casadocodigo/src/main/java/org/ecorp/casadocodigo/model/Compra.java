@@ -69,11 +69,13 @@ public class Compra {
 
   @OneToOne(mappedBy = "compra", cascade = PERSIST)
   private Pedido pedido;
+  
+  private CupomAplicado cupomAplicado;
 
   public Compra(@NotBlank @Email String emailComprador, @NotBlank String nomeComprador,
       @NotBlank String sobrenomeComprador, @NotBlank String documento, @NotBlank String rua,
       @NotBlank String complemento, @NotBlank String cidade, Pais pais, @NotNull String telefone,
-      @NotBlank String cep, Function<Compra, Pedido> funcaoConstrutorPedido) {
+      @NotBlank String cep, Function<Compra, Pedido> funcaoConstrutorPedido, Cupom cupom) {
 
     this.emailComprador = Objects.requireNonNull(emailComprador);
     this.nomeComprador = Objects.requireNonNull(nomeComprador);
@@ -85,6 +87,7 @@ public class Compra {
     this.pais = Objects.requireNonNull(pais);
     this.telefone = Objects.requireNonNull(telefone);
     this.cep = Objects.requireNonNull(cep);
+    this.cupomAplicado = new CupomAplicado(cupom);
     this.pedido = funcaoConstrutorPedido.apply(this);
   }
 
@@ -222,6 +225,12 @@ public class Compra {
   public Pedido getPedido() {
     return pedido;
   }
+  
+  
+  public CupomAplicado getCupomAplicado() {
+    return cupomAplicado;
+  }
+  
 
 
 

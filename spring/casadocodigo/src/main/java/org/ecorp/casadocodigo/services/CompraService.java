@@ -6,6 +6,7 @@ import org.ecorp.casadocodigo.dtos.CompraDTO;
 import org.ecorp.casadocodigo.forms.CompraFormRequest;
 import org.ecorp.casadocodigo.model.Compra;
 import org.ecorp.casadocodigo.repositories.CompraRepository;
+import org.ecorp.casadocodigo.repositories.CupomRepository;
 import org.ecorp.casadocodigo.repositories.EstadoRepository;
 import org.ecorp.casadocodigo.repositories.LivroRespository;
 import org.ecorp.casadocodigo.repositories.PaisRepository;
@@ -22,12 +23,14 @@ public class CompraService {
   @Autowired
   private LivroRespository livroRespository;
   @Autowired
+  private CupomRepository cupomRepository;
+  @Autowired
   private CompraRepository repository;
 
   @Transactional
   public CompraDTO realizaCompra(@Valid CompraFormRequest compraForm) {
 
-    Compra compra = compraForm.toModel(reposotyPais, reposotyEstado, livroRespository);
+    Compra compra = compraForm.toModel(reposotyPais, reposotyEstado, livroRespository, cupomRepository);
     repository.save(compra);
     return new CompraDTO(compra);
   }
