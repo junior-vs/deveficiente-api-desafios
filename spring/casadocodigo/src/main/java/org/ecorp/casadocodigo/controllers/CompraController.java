@@ -49,12 +49,7 @@ public class CompraController {
   @Transactional
   public ResponseEntity<CompraDTO> postMethodName(@RequestBody @Valid CompraFormRequest compraForm,
       UriComponentsBuilder builder) {
-    log.info(compraForm.toString());
-
     CompraDTO compra = service.realizaCompra(compraForm);
-
-
-
     URI location = builder.path("/compra/{id}").buildAndExpand("1").toUri();
     return ResponseEntity.created(location).body(compra);
   }

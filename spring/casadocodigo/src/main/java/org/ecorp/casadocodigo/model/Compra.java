@@ -5,6 +5,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 import java.util.Objects;
 import java.util.function.Function;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
@@ -70,6 +71,7 @@ public class Compra {
   @OneToOne(mappedBy = "compra", cascade = PERSIST)
   private Pedido pedido;
   
+  @Column(updatable = false)
   private CupomAplicado cupomAplicado;
 
   public Compra(@NotBlank @Email String emailComprador, @NotBlank String nomeComprador,

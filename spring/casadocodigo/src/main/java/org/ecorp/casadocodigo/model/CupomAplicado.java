@@ -2,6 +2,7 @@ package org.ecorp.casadocodigo.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 
@@ -10,7 +11,9 @@ public class CupomAplicado {
 
   @ManyToOne
   private Cupom cupom;
+  @Column(updatable = false)
   private LocalDate validadeMomento;
+  @Column(updatable = false)
   private BigDecimal descontoMomento;
 
   public CupomAplicado(Cupom cupom) {

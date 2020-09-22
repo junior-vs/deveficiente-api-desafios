@@ -76,7 +76,8 @@ public class CompraFormRequest {
       @NotBlank String complemento, @NotBlank String cidade,
       @NotNull @ExistsID(domainClass = Pais.class, fieldName = "paisID") Long paisID,
       @ExistsID(domainClass = Estado.class, fieldName = "estadoID") Long estadoID,
-      @NotNull String telefone, @NotBlank String cep, @Valid @NotNull PedidoRequestForm pedido,
+      @NotNull String telefone, @NotBlank String cep, @Valid @NotNull PedidoRequestForm pedido,  @ExistsID(domainClass = Cupom.class, fieldName = "codigo")
+      @CupomValido
       String cupom) {
 
     this.emailComprador = Objects.requireNonNull(emailComprador);
