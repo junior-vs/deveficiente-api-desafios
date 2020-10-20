@@ -27,8 +27,7 @@ public class NovoUsuarioForm {
     this.login = Objects.requireNonNull(login);
     this.senha = Objects.requireNonNull(senha);
   }
-  
-  
+   
 
   public String getLogin() {
     return login;

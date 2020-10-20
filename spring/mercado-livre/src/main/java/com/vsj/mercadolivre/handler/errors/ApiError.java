@@ -14,8 +14,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 
-@JsonTypeInfo(include = As.WRAPPER_OBJECT, use = Id.CUSTOM)
+@JsonTypeInfo(include = As.WRAPPER_OBJECT, use = Id.CUSTOM, property = "error", visible = true)
+@JsonTypeIdResolver(LowerCaseClassNameResolver.class)
 public class ApiError {
 
   private HttpStatus status;
